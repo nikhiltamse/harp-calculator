@@ -10,84 +10,141 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
     <style>
-        .v2-grid {
+        body {
+            background: #f9fafb;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            background: white;
+            padding: 3rem;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .main-grid {
             display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 2rem;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
             margin-top: 2rem;
         }
 
-        .results-grid {
+        .results-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            grid-template-columns: 400px 1fr 450px;
+            gap: 3rem;
         }
 
-        .dimension-section {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .dimension-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .dimension-section h4 {
-            color: #374151;
-            font-size: 14px;
-            font-weight: 600;
-            margin: 0 0 0.75rem 0;
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e40af;
+            margin: 0 0 1.5rem 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .dimension-section table {
+        .model-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e40af;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .model-description {
+            color: #6b7280;
+            margin: 0 0 2rem 0;
+            font-size: 15px;
+        }
+
+        .dim-table {
             width: 100%;
+            border-collapse: collapse;
+        }
+
+        .dim-table td {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f4f6;
             font-size: 14px;
         }
 
-        .dimension-section table td {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .dimension-section table td:first-child {
-            color: #6b7280;
+        .dim-table td:first-child {
+            color: #374151;
             font-weight: 500;
         }
 
-        .dimension-section table td:last-child {
+        .dim-table td:last-child {
             text-align: right;
             font-weight: 600;
             color: #111827;
         }
 
-        .dimension-section table tr:last-child td {
+        .dim-table tr:last-child td {
             border-bottom: none;
         }
 
-        .card-title {
-            margin: 0 0 1.5rem 0;
-            color: #1e40af;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 1rem;
-            font-size: 18px;
+        .dim-group {
+            margin-bottom: 2rem;
         }
 
-        @media (max-width: 1024px) {
-            .v2-grid {
+        .dim-group-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e40af;
+            margin: 0 0 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .diagram-box {
+            text-align: center;
+        }
+
+        .diagram-box img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+        }
+
+        .key-dimensions {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #eff6ff;
+            border-left: 4px solid #1e40af;
+            border-radius: 4px;
+        }
+
+        .key-dimensions h4 {
+            margin: 0 0 1rem 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+
+        .key-dimensions p {
+            margin: 0.5rem 0;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .key-dimensions strong {
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
                 grid-template-columns: 1fr;
             }
 
-            .results-grid {
+            .results-layout {
                 grid-template-columns: 1fr;
             }
         }
@@ -100,25 +157,26 @@
         <header>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <div style="flex: 1;">
-                    <h1>HARP Dimension Calculator</h1>
-                    <p class="subtitle">Select product and model to view detailed specifications</p>
+                    <h1 style="margin: 0; font-size: 28px; color: #1e40af;">Product Dimension Calculator</h1>
                 </div>
                 <a href="index.html"
-                    style="background: white; border: 2px solid #1e40af; color: #1e40af; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap; transition: all 0.2s ease;">
+                    style="background: white; border: 2px solid #1e40af; color: #1e40af; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap; transition: all 0.2s ease;">
                     🔍 Quick Find (V1)
                 </a>
             </div>
         </header>
 
         <!-- Main Grid -->
-        <div class="v2-grid">
+        <div class="main-grid">
             <!-- Left: Selection Panel -->
-            <div class="glass-card">
-                <h2 style="margin-top: 0; font-size: 20px;">Product Selection</h2>
+            <div>
+                <h3 class="section-title">Product Selection</h3>
 
-                <div class="form-group">
-                    <label for="series-select">Product Series</label>
-                    <select id="series-select" required>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="series-select"
+                        style="font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Product
+                        Series</label>
+                    <select id="series-select" required style="margin-top: 0.5rem;">
                         <option value="">Select Series...</option>
                         <option value="boltSeries">Bolt Series (BS)</option>
                         <option value="pitPro111">PitPro-111 (PP111)</option>
@@ -128,88 +186,85 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="model-select">Model Configuration</label>
-                    <select id="model-select" required disabled>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="model-select"
+                        style="font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Model
+                        Configuration</label>
+                    <select id="model-select" required disabled style="margin-top: 0.5rem;">
                         <option value="">Select series first...</option>
                     </select>
                 </div>
 
-                <div id="dimension-inputs" style="display: none;">
-                    <h3 style="font-size: 16px; margin: 1.5rem 0 1rem 0;">Car Dimensions</h3>
+                <div id="dimension-inputs" style="display: none; margin-top: 1.5rem;">
+                    <h4
+                        style="font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem;">
+                        Car Dimensions</h4>
 
-                    <div class="form-group">
-                        <label for="car-length">Car Length (mm)</label>
-                        <input type="number" id="car-length" placeholder="e.g., 5000" min="3000" max="6000"
-                            value="5000">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="car-length" style="font-size: 13px; color: #374151;">Car Length (mm)</label>
+                        <input type="number" id="car-length" placeholder="e.g., 5000" min="3000" max="6000" value="5000"
+                            style="margin-top: 0.25rem;">
                     </div>
 
-                    <div class="form-group" id="car-height-group" style="display: none;">
-                        <label for="car-height">Car Height (mm)</label>
-                        <input type="number" id="car-height" placeholder="e.g., 1550" min="1400" max="2000"
-                            value="1550">
+                    <div class="form-group" id="car-height-group" style="display: none; margin-bottom: 1rem;">
+                        <label for="car-height" style="font-size: 13px; color: #374151;">Car Height (mm)</label>
+                        <input type="number" id="car-height" placeholder="e.g., 1550" min="1400" max="2000" value="1550"
+                            style="margin-top: 0.25rem;">
                     </div>
                 </div>
 
-                <button class="btn-primary" id="calculate-btn" disabled style="width: 100%; margin-top: 1rem;">Calculate
-                    Dimensions</button>
-                <button class="btn-secondary" id="reset-btn" style="width: 100%; margin-top: 0.5rem;">Reset
+                <button class="btn-primary" id="calculate-btn" disabled
+                    style="width: 100%; margin-top: 1.5rem;">Calculate Dimensions</button>
+                <button class="btn-secondary" id="reset-btn" style="width: 100%; margin-top: 0.75rem;">Reset
                     Calculator</button>
             </div>
 
             <!-- Right: Results -->
             <div id="results-panel" style="display: none;">
-                <!-- System Info -->
-                <div class="glass-card" style="margin-bottom: 2rem;">
-                    <h2 id="system-title" style="margin: 0 0 0.5rem 0; font-size: 24px; color: #1e40af;">System
-                        Specifications</h2>
-                    <p id="system-description" style="margin: 0; color: #6b7280;"></p>
-                </div>
+                <!-- Model Title -->
+                <h2 class="model-title" id="system-title">System Specifications</h2>
+                <p class="model-description" id="system-description"></p>
 
-                <!-- Main Content Grid -->
-                <div class="results-grid">
-                    <!-- All Dimensions in One Card -->
-                    <div class="glass-card">
-                        <h3 class="card-title">System Dimensions</h3>
+                <!-- Results Layout -->
+                <div class="results-layout">
+                    <!-- System Dimensions -->
+                    <div>
+                        <h3 class="section-title">System Dimensions</h3>
 
-                        <!-- Height Section -->
-                        <div class="dimension-section">
-                            <h4>Height</h4>
-                            <table>
+                        <div class="dim-group">
+                            <h4 class="dim-group-title">Height</h4>
+                            <table class="dim-table">
                                 <tbody id="height-table"></tbody>
                             </table>
                         </div>
 
-                        <!-- Width Section -->
-                        <div class="dimension-section">
-                            <h4>Width</h4>
-                            <table>
+                        <div class="dim-group">
+                            <h4 class="dim-group-title">Width</h4>
+                            <table class="dim-table">
                                 <tbody id="width-table"></tbody>
                             </table>
                         </div>
 
-                        <!-- Length Section -->
-                        <div class="dimension-section">
-                            <h4>Length</h4>
-                            <table>
+                        <div class="dim-group">
+                            <h4 class="dim-group-title">Length</h4>
+                            <table class="dim-table">
                                 <tbody id="length-table"></tbody>
                             </table>
                         </div>
 
-                        <!-- Additional Specs -->
-                        <div class="dimension-section">
-                            <h4>Additional Specifications</h4>
-                            <table>
+                        <div class="dim-group">
+                            <h4 class="dim-group-title">Additional</h4>
+                            <table class="dim-table">
                                 <tbody id="specs-table"></tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- Diagram -->
-                    <div class="glass-card">
-                        <h3 class="card-title">System Diagram</h3>
-                        <div id="diagram-container" style="text-align: center;">
-                            <p style="color: #6b7280; padding: 2rem;">📐 Select a system to view technical diagram</p>
+                    <!-- System Diagram -->
+                    <div>
+                        <h3 class="section-title">System Diagram</h3>
+                        <div class="diagram-box" id="diagram-container">
+                            <p style="color: #9ca3af; padding: 3rem;">Select a system to view diagram</p>
                         </div>
                     </div>
                 </div>
