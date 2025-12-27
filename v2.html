@@ -14,29 +14,107 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="v2-style.css">
+    <style>
+        .v2-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .dimension-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dimension-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .dimension-section h4 {
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 0.75rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dimension-section table {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .dimension-section table td {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .dimension-section table td:first-child {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .dimension-section table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .dimension-section table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .card-title {
+            margin: 0 0 1.5rem 0;
+            color: #1e40af;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+            font-size: 18px;
+        }
+
+        @media (max-width: 1024px) {
+            .v2-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <!-- Header -->
         <header>
-            <div class="header-content">
-                <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div style="flex: 1;">
                     <h1>HARP Dimension Calculator</h1>
                     <p class="subtitle">Select product and model to view detailed specifications</p>
                 </div>
-                <a href="index.html" class="version-switch-btn">
-                    ≡ƒöì Quick Find (V1)
+                <a href="index.html"
+                    style="background: white; border: 2px solid #1e40af; color: #1e40af; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap; transition: all 0.2s ease;">
+                    🔍 Quick Find (V1)
                 </a>
             </div>
         </header>
 
-        <!-- Main Calculator -->
-        <div class="v2-calculator">
-            <!-- Selection Panel -->
-            <div class="selection-panel glass-card">
-                <h2 class="panel-title">Product Selection</h2>
+        <!-- Main Grid -->
+        <div class="v2-grid">
+            <!-- Left: Selection Panel -->
+            <div class="glass-card">
+                <h2 style="margin-top: 0; font-size: 20px;">Product Selection</h2>
 
                 <div class="form-group">
                     <label for="series-select">Product Series</label>
@@ -57,8 +135,8 @@
                     </select>
                 </div>
 
-                <div class="dimension-inputs" id="dimension-inputs" style="display: none;">
-                    <h3 class="section-subtitle">Car Dimensions</h3>
+                <div id="dimension-inputs" style="display: none;">
+                    <h3 style="font-size: 16px; margin: 1.5rem 0 1rem 0;">Car Dimensions</h3>
 
                     <div class="form-group">
                         <label for="car-length">Car Length (mm)</label>
@@ -73,66 +151,66 @@
                     </div>
                 </div>
 
-                <button class="btn-primary" id="calculate-btn" disabled>Calculate Dimensions</button>
-                <button class="btn-secondary" id="reset-btn">Reset Calculator</button>
+                <button class="btn-primary" id="calculate-btn" disabled style="width: 100%; margin-top: 1rem;">Calculate
+                    Dimensions</button>
+                <button class="btn-secondary" id="reset-btn" style="width: 100%; margin-top: 0.5rem;">Reset
+                    Calculator</button>
             </div>
 
-            <!-- Results Panel -->
-            <div class="results-panel" id="results-panel" style="display: none;">
+            <!-- Right: Results -->
+            <div id="results-panel" style="display: none;">
                 <!-- System Info -->
-                <div class="system-info glass-card">
-                    <h2 id="system-title">System Specifications</h2>
-                    <p id="system-description"></p>
+                <div class="glass-card" style="margin-bottom: 2rem;">
+                    <h2 id="system-title" style="margin: 0 0 0.5rem 0; font-size: 24px; color: #1e40af;">System
+                        Specifications</h2>
+                    <p id="system-description" style="margin: 0; color: #6b7280;"></p>
                 </div>
 
-                <!-- Dimension Tables -->
-                <div class="dimension-tables">
-                    <!-- Height Table -->
-                    <div class="dimension-table glass-card">
-                        <h3>Height</h3>
-                        <table>
-                            <tbody id="height-table">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
+                <!-- Main Content Grid -->
+                <div class="results-grid">
+                    <!-- All Dimensions in One Card -->
+                    <div class="glass-card">
+                        <h3 class="card-title">System Dimensions</h3>
+
+                        <!-- Height Section -->
+                        <div class="dimension-section">
+                            <h4>Height</h4>
+                            <table>
+                                <tbody id="height-table"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Width Section -->
+                        <div class="dimension-section">
+                            <h4>Width</h4>
+                            <table>
+                                <tbody id="width-table"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Length Section -->
+                        <div class="dimension-section">
+                            <h4>Length</h4>
+                            <table>
+                                <tbody id="length-table"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Additional Specs -->
+                        <div class="dimension-section">
+                            <h4>Additional Specifications</h4>
+                            <table>
+                                <tbody id="specs-table"></tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <!-- Width Table -->
-                    <div class="dimension-table glass-card">
-                        <h3>Width</h3>
-                        <table>
-                            <tbody id="width-table">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Length Table -->
-                    <div class="dimension-table glass-card">
-                        <h3>Length</h3>
-                        <table>
-                            <tbody id="length-table">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Additional Specs -->
-                    <div class="dimension-table glass-card" id="additional-specs">
-                        <h3>Additional Specifications</h3>
-                        <table>
-                            <tbody id="specs-table">
-                                <!-- Populated by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Diagram Panel -->
-                <div class="diagram-panel glass-card">
-                    <h3>System Diagram</h3>
-                    <div class="diagram-container" id="diagram-container">
-                        <p class="diagram-note">≡ƒôÉ Select a system to view technical diagram</p>
+                    <!-- Diagram -->
+                    <div class="glass-card">
+                        <h3 class="card-title">System Diagram</h3>
+                        <div id="diagram-container" style="text-align: center;">
+                            <p style="color: #6b7280; padding: 2rem;">📐 Select a system to view technical diagram</p>
+                        </div>
                     </div>
                 </div>
             </div>
