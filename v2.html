@@ -30,15 +30,35 @@
 
         .main-grid {
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 240px 1fr;
             gap: 3rem;
             margin-top: 2rem;
         }
 
         .results-layout {
             display: grid;
-            grid-template-columns: 400px 1fr 450px;
+            grid-template-columns: 350px 1fr;
             gap: 3rem;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
         }
 
         .section-title {
@@ -225,7 +245,7 @@
                 <h2 class="model-title" id="system-title">System Specifications</h2>
                 <p class="model-description" id="system-description"></p>
 
-                <!-- Results Layout -->
+                <!-- Results Layout: 2 columns -->
                 <div class="results-layout">
                     <!-- System Dimensions -->
                     <div>
@@ -260,7 +280,7 @@
                         </div>
                     </div>
 
-                    <!-- System Diagram -->
+                    <!-- System Diagram - Much Larger -->
                     <div>
                         <h3 class="section-title">System Diagram</h3>
                         <div class="diagram-box" id="diagram-container">
