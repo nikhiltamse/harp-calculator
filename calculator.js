@@ -1,322 +1,336 @@
-// HARP Parking System Calculator - Main Logic
+// HARP Parking System Recommendation Calculator
 
-// Tab Switching
 document.addEventListener('DOMContentLoaded', function () {
-    initializeTabs();
-    initializeForms();
+    initializeForm();
 });
 
-function initializeTabs() {
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons and contents
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-
-            // Add active class to clicked button
-            button.classList.add('active');
-
-            // Show corresponding tab content
-            const tabId = button.getAttribute('data-tab');
-            const targetContent = document.getElementById(`${tabId}-tab`);
-            if (targetContent) {
-                targetContent.classList.add('active');
-            }
-
-            // Hide results when switching tabs
-            hideResults();
-        });
+function initializeForm() {
+    const form = document.getElementById('space-form');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        findCompatibleSystems();
     });
 }
 
-function initializeForms() {
-    // Bolt Series Form
-    document.getElementById('bolt-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        calculateBoltSeries();
-    });
-
-    // PitPro-111 Form
-    document.getElementById('pitpro111-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        calculatePitPro111();
-    });
-
-    // PitPro-211 Form
-    document.getElementById('pitpro211-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        calculatePitPro211();
-    });
-
-    // Elite Series Form
-    document.getElementById('elite-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        calculateEliteSeries();
-    });
-
-    // Puzzle Parking Form
-    document.getElementById('puzzle-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        calculatePuzzleParking();
-    });
-}
-
-// Calculation Functions
-function calculateBoltSeries() {
-    const modelSelect = document.getElementById('bolt-model');
-    const carLength = parseInt(document.getElementById('bolt-car-length').value);
-
-    if (!modelSelect.value) {
-        showError('Please select a model configuration');
-        return;
-    }
-
-    if (!carLength || carLength < 3000 || carLength > 6000) {
-        showError('Please enter a valid car length between 3000mm and 6000mm');
-        return;
-    }
-
-    const model = modelSelect.value;
-    const spec = HARP_SPECIFICATIONS.boltSeries[model];
-
-    if (!spec) {
-        showError('Model specification not found');
-        return;
-    }
-
-    // Calculate adjusted dimensions based on car length
-    const lengthAdjustment = carLength - 5000; // Base length is 5000mm
-    const totalLength = spec.dimensions.totalLength + lengthAdjustment;
-
-    const results = {
-        'Model': `${model} - ${spec.name}`,
-        'Required Height (H)': `${spec.dimensions.requiredHeight} mm`,
-        'Required Width (W)': `${spec.dimensions.requiredWidth} mm`,
-        'Platform Length (L2)': `${spec.dimensions.platformLength + lengthAdjustment} mm`,
-        'Total Length (L1)': `${totalLength} mm`,
-        'Entry Car Height': `${spec.carHeights.entry} mm`,
-        'Upper Car Height': `${spec.carHeights.upper} mm`
+function findCompatibleSystems() {
+    // Get user inputs
+    const availableSpace = {
+        height: parseInt(document.getElementById('height').value),
+        width: parseInt(document.getElementById('width').value),
+        length: parseInt(document.getElementById('length').value),
+        pitDepth: parseInt(document.getElementById('pit-depth').value) || 0
     };
 
-    displayResults(results);
-}
-
-function calculatePitPro111() {
-    const modelSelect = document.getElementById('pitpro111-model');
-    const carLength = parseInt(document.getElementById('pitpro111-car-length').value);
-
-    if (!modelSelect.value) {
-        showError('Please select a model configuration');
+    // Validate inputs
+    if (!availableSpace.height || !availableSpace.width || !availableSpace.length) {
+        showError('Please fill in all required fields (Height, Width, Length)');
         return;
     }
 
-    if (!carLength || carLength < 3000 || carLength > 6000) {
-        showError('Please enter a valid car length between 3000mm and 6000mm');
-        return;
-    }
-
-    const model = modelSelect.value;
-    const spec = HARP_SPECIFICATIONS.pitPro111[model];
-
-    if (!spec) {
-        showError('Model specification not found');
-        return;
-    }
-
-    const lengthAdjustment = carLength - 5000;
-    const totalLength = spec.dimensions.totalLength + lengthAdjustment;
-
-    const results = {
-        'Model': `${model} - ${spec.name}`,
-        'Required Height (H)': `${spec.dimensions.requiredHeight} mm`,
-        'Pit Depth (P)': `${spec.dimensions.pitDepth} mm`,
-        'Required Width (W)': `${spec.dimensions.requiredWidth} mm`,
-        'Platform Length (L2)': `${spec.dimensions.platformLength + lengthAdjustment} mm`,
-        'Total Length (L1)': `${totalLength} mm`,
-        'Top Car Height': `${spec.carHeights.top} mm`,
-        'Ground Car Height': `${spec.carHeights.ground} mm`,
-        'Pit Car Height': `${spec.carHeights.pit} mm`
-    };
-
-    displayResults(results);
-}
-
-function calculatePitPro211() {
-    const modelSelect = document.getElementById('pitpro211-model');
-    const carLength = parseInt(document.getElementById('pitpro211-car-length').value);
-
-    if (!modelSelect.value) {
-        showError('Please select a model configuration');
-        return;
-    }
-
-    if (!carLength || carLength < 3000 || carLength > 6000) {
-        showError('Please enter a valid car length between 3000mm and 6000mm');
-        return;
-    }
-
-    const model = modelSelect.value;
-    const spec = HARP_SPECIFICATIONS.pitPro211[model];
-
-    if (!spec) {
-        showError('Model specification not found');
-        return;
-    }
-
-    const lengthAdjustment = carLength - 5000;
-    const totalLength = spec.dimensions.totalLength + lengthAdjustment;
-
-    const results = {
-        'Model': `${model} - ${spec.name}`,
-        'Required Height (H)': `${spec.dimensions.requiredHeight} mm`,
-        'Pit Depth (P)': `${spec.dimensions.pitDepth} mm`,
-        'Required Width (W)': `${spec.dimensions.requiredWidth} mm`,
-        'Platform Length (L2)': `${spec.dimensions.platformLength + lengthAdjustment} mm`,
-        'Total Length (L1)': `${totalLength} mm`,
-        'Entry Car Height': `${spec.carHeights.entry} mm`,
-        'Lower Car Height': `${spec.carHeights.lower} mm`
-    };
-
-    displayResults(results);
-}
-
-function calculateEliteSeries() {
-    const modelSelect = document.getElementById('elite-model');
-    const carLength = parseInt(document.getElementById('elite-car-length').value);
-
-    if (!modelSelect.value) {
-        showError('Please select a model configuration');
-        return;
-    }
-
-    if (!carLength || carLength < 3000 || carLength > 6000) {
-        showError('Please enter a valid car length between 3000mm and 6000mm');
-        return;
-    }
-
-    const model = modelSelect.value;
-    const spec = HARP_SPECIFICATIONS.eliteSeries[model];
-
-    if (!spec) {
-        showError('Model specification not found');
-        return;
-    }
-
-    const lengthAdjustment = carLength - 5000;
-    const totalLength = spec.dimensions.totalLength + lengthAdjustment;
-
-    const results = {
-        'Model': `${model} - ${spec.name}`,
-        'Required Height (H)': `${spec.dimensions.requiredHeight} mm`,
-        'Required Width (W)': `${spec.dimensions.requiredWidth} mm`,
-        'Platform Length (L2)': `${spec.dimensions.platformLength + lengthAdjustment} mm`,
-        'Total Length (L1)': `${totalLength} mm`,
-        'Entry Car Height': `${spec.carHeights.entry} mm`,
-        'Upper Car Height': `${spec.carHeights.upper} mm`
-    };
-
-    displayResults(results);
-}
-
-function calculatePuzzleParking() {
-    const modelSelect = document.getElementById('puzzle-model');
-    const carHeight = parseInt(document.getElementById('puzzle-car-height').value);
-
-    if (!modelSelect.value) {
-        showError('Please select a configuration');
-        return;
-    }
-
-    if (!carHeight || carHeight < 1400 || carHeight > 2000) {
-        showError('Please enter a valid car height between 1400mm and 2000mm');
-        return;
-    }
-
-    const model = modelSelect.value;
-    const spec = HARP_SPECIFICATIONS.puzzleParking[model];
-
-    if (!spec) {
-        showError('Model specification not found');
-        return;
-    }
-
-    // Height adjustment based on car height
-    const heightAdjustment = carHeight - 1550; // Base height is 1550mm
-    const requiredHeight = spec.dimensions.requiredHeight + heightAdjustment;
-
-    const results = {
-        'Configuration': `${spec.name}`,
-        'Total Capacity': `${spec.configuration.rows * spec.configuration.columns} cars`,
-        'Required Height (H)': `${requiredHeight} mm`,
-        'Required Width (W)': `${spec.dimensions.requiredWidth} mm`,
-        'Required Length (L)': `${spec.dimensions.requiredLength} mm`,
-        'Rows': spec.configuration.rows,
-        'Columns': spec.configuration.columns,
-        'Max Car Height': `${carHeight} mm`
-    };
-
-    displayResults(results);
-}
-
-// Display Functions
-function displayResults(results) {
     hideError();
 
-    const resultsSection = document.getElementById('results');
-    const resultsGrid = document.getElementById('results-grid');
+    // Find compatible and incompatible systems
+    const compatible = [];
+    const incompatible = [];
 
-    // Clear previous results
-    resultsGrid.innerHTML = '';
+    // Check all systems
+    for (const [seriesKey, models] of Object.entries(HARP_SPECIFICATIONS)) {
+        for (const [modelId, spec] of Object.entries(models)) {
+            const result = checkCompatibility(spec, availableSpace, seriesKey, modelId);
 
-    // Create result items
-    for (const [label, value] of Object.entries(results)) {
-        const resultItem = document.createElement('div');
-        resultItem.className = 'result-item';
-
-        const resultLabel = document.createElement('div');
-        resultLabel.className = 'result-label';
-        resultLabel.textContent = label;
-
-        const resultValue = document.createElement('div');
-        resultValue.className = 'result-value';
-
-        // Check if value contains units (mm)
-        if (typeof value === 'string' && value.includes('mm')) {
-            const parts = value.split(' ');
-            resultValue.innerHTML = `${parts[0]}<span class="result-unit">${parts[1]}</span>`;
-        } else {
-            resultValue.textContent = value;
+            if (result.compatible) {
+                compatible.push(result);
+            } else {
+                incompatible.push(result);
+            }
         }
-
-        resultItem.appendChild(resultLabel);
-        resultItem.appendChild(resultValue);
-        resultsGrid.appendChild(resultItem);
     }
 
-    // Show results with animation
-    resultsSection.classList.add('show');
+    // Sort compatible by fit score (best first)
+    compatible.sort((a, b) => b.fitScore - a.fitScore);
+
+    // Display results
+    displayResults(compatible, incompatible, availableSpace);
+}
+
+function checkCompatibility(spec, availableSpace, seriesKey, modelId) {
+    const reasons = [];
+    let compatible = true;
+
+    // Check height
+    if (spec.dimensions.requiredHeight > availableSpace.height) {
+        compatible = false;
+        reasons.push(`Height: Need ${spec.dimensions.requiredHeight}mm, have ${availableSpace.height}mm (short by ${spec.dimensions.requiredHeight - availableSpace.height}mm)`);
+    }
+
+    // Check width
+    if (spec.dimensions.requiredWidth > availableSpace.width) {
+        compatible = false;
+        reasons.push(`Width: Need ${spec.dimensions.requiredWidth}mm, have ${availableSpace.width}mm (short by ${spec.dimensions.requiredWidth - availableSpace.width}mm)`);
+    }
+
+    // Check length
+    if (spec.dimensions.totalLength > availableSpace.length) {
+        compatible = false;
+        reasons.push(`Length: Need ${spec.dimensions.totalLength}mm, have ${availableSpace.length}mm (short by ${spec.dimensions.totalLength - availableSpace.length}mm)`);
+    }
+
+    // Check pit depth (if system requires it)
+    if (spec.dimensions.pitDepth && spec.dimensions.pitDepth > 0) {
+        if (availableSpace.pitDepth === 0) {
+            compatible = false;
+            reasons.push(`Pit Required: This system needs ${spec.dimensions.pitDepth}mm pit depth (no pit available)`);
+        } else if (spec.dimensions.pitDepth > availableSpace.pitDepth) {
+            compatible = false;
+            reasons.push(`Pit Depth: Need ${spec.dimensions.pitDepth}mm, have ${availableSpace.pitDepth}mm (short by ${spec.dimensions.pitDepth - availableSpace.pitDepth}mm)`);
+        }
+    }
+
+    // Calculate fit score (space utilization)
+    const fitScore = compatible ? calculateFitScore(spec, availableSpace) : 0;
+
+    return {
+        seriesKey,
+        modelId,
+        spec,
+        compatible,
+        reasons,
+        fitScore
+    };
+}
+
+function calculateFitScore(spec, availableSpace) {
+    // Calculate how well the system fits the space (0-100)
+    const heightUtil = (spec.dimensions.requiredHeight / availableSpace.height) * 100;
+    const widthUtil = (spec.dimensions.requiredWidth / availableSpace.width) * 100;
+    const lengthUtil = (spec.dimensions.totalLength / availableSpace.length) * 100;
+
+    // Average utilization
+    let avgUtil = (heightUtil + widthUtil + lengthUtil) / 3;
+
+    // Bonus for pit systems if pit is available
+    if (spec.dimensions.pitDepth && availableSpace.pitDepth > 0) {
+        const pitUtil = (spec.dimensions.pitDepth / availableSpace.pitDepth) * 100;
+        avgUtil = (avgUtil * 3 + pitUtil) / 4;
+    }
+
+    // Prefer 85-95% utilization (not too tight, not too wasteful)
+    if (avgUtil >= 85 && avgUtil <= 95) {
+        return avgUtil + 5; // Bonus for optimal fit
+    }
+
+    return Math.min(avgUtil, 100);
+}
+
+function displayResults(compatible, incompatible, availableSpace) {
+    const resultsContainer = document.getElementById('results-container');
+    const resultsCount = document.getElementById('results-count');
+    const compatibleDiv = document.getElementById('compatible-systems');
+    const incompatibleDiv = document.getElementById('incompatible-systems');
+
+    // Clear previous results
+    compatibleDiv.innerHTML = '';
+    incompatibleDiv.innerHTML = '';
+
+    // Show results count
+    resultsCount.textContent = `${compatible.length} compatible system${compatible.length !== 1 ? 's' : ''} found`;
+
+    // Group compatible systems by series
+    const groupedCompatible = groupBySeries(compatible);
+
+    // Display compatible systems
+    if (compatible.length > 0) {
+        for (const [seriesName, systems] of Object.entries(groupedCompatible)) {
+            const seriesCard = createSeriesCard(seriesName, systems, availableSpace, true);
+            compatibleDiv.appendChild(seriesCard);
+        }
+    } else {
+        compatibleDiv.innerHTML = '<div class="no-results">No compatible systems found for the given space. Try increasing the dimensions.</div>';
+    }
+
+    // Display incompatible systems (collapsed by default)
+    if (incompatible.length > 0) {
+        const groupedIncompatible = groupBySeries(incompatible);
+        const incompatibleSection = document.createElement('div');
+        incompatibleSection.className = 'incompatible-section';
+        incompatibleSection.innerHTML = `
+            <h3 class="incompatible-title" onclick="toggleIncompatible()">
+                ❌ Incompatible Systems (${incompatible.length})
+                <span class="toggle-icon">▼</span>
+            </h3>
+            <div class="incompatible-content" id="incompatible-content" style="display: none;">
+            </div>
+        `;
+
+        const incompatibleContent = incompatibleSection.querySelector('.incompatible-content');
+        for (const [seriesName, systems] of Object.entries(groupedIncompatible)) {
+            const seriesCard = createSeriesCard(seriesName, systems, availableSpace, false);
+            incompatibleContent.appendChild(seriesCard);
+        }
+
+        incompatibleDiv.appendChild(incompatibleSection);
+    }
+
+    // Show results
+    resultsContainer.classList.add('show');
 
     // Scroll to results
     setTimeout(() => {
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
 }
 
-function hideResults() {
-    const resultsSection = document.getElementById('results');
-    resultsSection.classList.remove('show');
+function groupBySeries(systems) {
+    const grouped = {};
+    const seriesNames = {
+        'boltSeries': 'Bolt Series',
+        'pitPro111': 'PitPro-111',
+        'pitPro211': 'PitPro-211',
+        'eliteSeries': 'Elite Series',
+        'puzzleParking': 'Puzzle Parking'
+    };
+
+    for (const system of systems) {
+        const seriesName = seriesNames[system.seriesKey] || system.seriesKey;
+        if (!grouped[seriesName]) {
+            grouped[seriesName] = [];
+        }
+        grouped[seriesName].push(system);
+    }
+
+    return grouped;
 }
 
-// Error Handling
+function createSeriesCard(seriesName, systems, availableSpace, isCompatible) {
+    const card = document.createElement('div');
+    card.className = `series-card ${isCompatible ? 'compatible' : 'incompatible'}`;
+
+    const icon = isCompatible ? '✅' : '❌';
+    const count = systems.length;
+
+    let html = `
+        <div class="series-header">
+            <h3>${icon} ${seriesName}</h3>
+            <span class="system-count">${count} system${count !== 1 ? 's' : ''}</span>
+        </div>
+        <div class="systems-list">
+    `;
+
+    for (const system of systems) {
+        html += createSystemCard(system, availableSpace, isCompatible);
+    }
+
+    html += '</div>';
+    card.innerHTML = html;
+
+    return card;
+}
+
+function createSystemCard(system, availableSpace, isCompatible) {
+    const { modelId, spec, fitScore, reasons } = system;
+
+    let html = `<div class="system-card ${isCompatible ? 'compatible-card' : 'incompatible-card'}">`;
+
+    // Header
+    html += `
+        <div class="system-header">
+            <div class="system-name">${modelId} - ${spec.name}</div>
+            ${isCompatible ? `<div class="fit-score">${getFitScoreBadge(fitScore)}</div>` : ''}
+        </div>
+    `;
+
+    // Dimensions comparison
+    html += '<div class="dimensions-comparison">';
+
+    html += createDimensionRow('Height', spec.dimensions.requiredHeight, availableSpace.height);
+    html += createDimensionRow('Width', spec.dimensions.requiredWidth, availableSpace.width);
+    html += createDimensionRow('Length', spec.dimensions.totalLength, availableSpace.length);
+
+    if (spec.dimensions.pitDepth) {
+        html += createDimensionRow('Pit Depth', spec.dimensions.pitDepth, availableSpace.pitDepth);
+    }
+
+    html += '</div>';
+
+    // Show reasons if incompatible
+    if (!isCompatible && reasons.length > 0) {
+        html += '<div class="incompatible-reasons">';
+        for (const reason of reasons) {
+            html += `<div class="reason">⚠️ ${reason}</div>`;
+        }
+        html += '</div>';
+    }
+
+    html += '</div>';
+
+    return html;
+}
+
+function createDimensionRow(label, required, available) {
+    const fits = required <= available;
+    const difference = available - required;
+    const icon = fits ? '✓' : '✗';
+    const statusClass = fits ? 'fits' : 'no-fit';
+
+    return `
+        <div class="dimension-row ${statusClass}">
+            <span class="dim-icon">${icon}</span>
+            <span class="dim-label">${label}:</span>
+            <span class="dim-required">${required}mm</span>
+            <span class="dim-available">(Available: ${available}mm)</span>
+            <span class="dim-diff">${difference >= 0 ? '+' : ''}${difference}mm</span>
+        </div>
+    `;
+}
+
+function getFitScoreBadge(score) {
+    let stars = '';
+    let label = '';
+
+    if (score >= 95) {
+        stars = '⭐⭐⭐⭐⭐';
+        label = 'Perfect Fit';
+    } else if (score >= 85) {
+        stars = '⭐⭐⭐⭐';
+        label = 'Excellent';
+    } else if (score >= 75) {
+        stars = '⭐⭐⭐';
+        label = 'Good';
+    } else if (score >= 60) {
+        stars = '⭐⭐';
+        label = 'Fair';
+    } else {
+        stars = '⭐';
+        label = 'Poor Fit';
+    }
+
+    return `<span class="fit-badge">${stars} ${label} (${Math.round(score)}%)</span>`;
+}
+
+function toggleIncompatible() {
+    const content = document.getElementById('incompatible-content');
+    const icon = document.querySelector('.toggle-icon');
+
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '▲';
+    } else {
+        content.style.display = 'none';
+        icon.textContent = '▼';
+    }
+}
+
+function resetForm() {
+    document.getElementById('space-form').reset();
+    document.getElementById('results-container').classList.remove('show');
+    hideError();
+}
+
 function showError(message) {
     const errorElement = document.getElementById('error-message');
     errorElement.textContent = message;
     errorElement.classList.add('show');
 
-    // Auto-hide after 5 seconds
     setTimeout(() => {
         hideError();
     }, 5000);
@@ -325,26 +339,4 @@ function showError(message) {
 function hideError() {
     const errorElement = document.getElementById('error-message');
     errorElement.classList.remove('show');
-}
-
-// Reset Functions
-function resetForm(series) {
-    // Hide results and errors
-    hideResults();
-    hideError();
-
-    // Reset the form
-    const form = document.getElementById(`${series}-form`);
-    if (form) {
-        form.reset();
-    }
-}
-
-// Utility Functions
-function formatNumber(num) {
-    return num.toLocaleString('en-US');
-}
-
-function convertToMeters(mm) {
-    return (mm / 1000).toFixed(2);
 }
