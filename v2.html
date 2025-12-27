@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HARP Parking System Dimension Calculator - Detailed specifications and diagrams">
+    <title>HARP Calculator V2 - Detailed Specifications</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="v2-style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>HARP Dimension Calculator</h1>
+                    <p class="subtitle">Select product and model to view detailed specifications</p>
+                </div>
+                <a href="index.html" class="version-switch-btn">
+                    ≡ƒöì Quick Find (V1)
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Calculator -->
+        <div class="v2-calculator">
+            <!-- Selection Panel -->
+            <div class="selection-panel glass-card">
+                <h2 class="panel-title">Product Selection</h2>
+
+                <div class="form-group">
+                    <label for="series-select">Product Series</label>
+                    <select id="series-select" required>
+                        <option value="">Select Series...</option>
+                        <option value="boltSeries">Bolt Series (BS)</option>
+                        <option value="pitPro111">PitPro-111 (PP111)</option>
+                        <option value="pitPro211">PitPro-211 (PP211)</option>
+                        <option value="eliteSeries">Elite Series (EL)</option>
+                        <option value="puzzleParking">Puzzle Parking (PZ)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="model-select">Model Configuration</label>
+                    <select id="model-select" required disabled>
+                        <option value="">Select series first...</option>
+                    </select>
+                </div>
+
+                <div class="dimension-inputs" id="dimension-inputs" style="display: none;">
+                    <h3 class="section-subtitle">Car Dimensions</h3>
+
+                    <div class="form-group">
+                        <label for="car-length">Car Length (mm)</label>
+                        <input type="number" id="car-length" placeholder="e.g., 5000" min="3000" max="6000"
+                            value="5000">
+                    </div>
+
+                    <div class="form-group" id="car-height-group" style="display: none;">
+                        <label for="car-height">Car Height (mm)</label>
+                        <input type="number" id="car-height" placeholder="e.g., 1550" min="1400" max="2000"
+                            value="1550">
+                    </div>
+                </div>
+
+                <button class="btn-primary" id="calculate-btn" disabled>Calculate Dimensions</button>
+                <button class="btn-secondary" id="reset-btn">Reset Calculator</button>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel" id="results-panel" style="display: none;">
+                <!-- System Info -->
+                <div class="system-info glass-card">
+                    <h2 id="system-title">System Specifications</h2>
+                    <p id="system-description"></p>
+                </div>
+
+                <!-- Dimension Tables -->
+                <div class="dimension-tables">
+                    <!-- Height Table -->
+                    <div class="dimension-table glass-card">
+                        <h3>Height</h3>
+                        <table>
+                            <tbody id="height-table">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Width Table -->
+                    <div class="dimension-table glass-card">
+                        <h3>Width</h3>
+                        <table>
+                            <tbody id="width-table">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Length Table -->
+                    <div class="dimension-table glass-card">
+                        <h3>Length</h3>
+                        <table>
+                            <tbody id="length-table">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Additional Specs -->
+                    <div class="dimension-table glass-card" id="additional-specs">
+                        <h3>Additional Specifications</h3>
+                        <table>
+                            <tbody id="specs-table">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Diagram Panel -->
+                <div class="diagram-panel glass-card">
+                    <h3>System Diagram</h3>
+                    <div class="diagram-container" id="diagram-container">
+                        <p class="diagram-note">≡ƒôÉ Select a system to view technical diagram</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/specifications.js"></script>
+    <script src="v2-diagrams.js"></script>
+    <script src="v2-calculator.js"></script>
+</body>
+
+</html>
