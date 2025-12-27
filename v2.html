@@ -37,8 +37,18 @@
 
         .results-layout {
             display: grid;
-            grid-template-columns: 350px 1fr;
+            grid-template-columns: 1fr 350px;
             gap: 3rem;
+        }
+
+        .diagram-center {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .dimensions-right {
+            grid-column: 2;
+            grid-row: 1;
         }
 
         .form-group select,
@@ -245,10 +255,18 @@
                 <h2 class="model-title" id="system-title">System Specifications</h2>
                 <p class="model-description" id="system-description"></p>
 
-                <!-- Results Layout: 2 columns -->
+                <!-- Results Layout: Diagram Center, Dimensions Right -->
                 <div class="results-layout">
-                    <!-- System Dimensions -->
-                    <div>
+                    <!-- System Diagram - Large Center Area -->
+                    <div class="diagram-center">
+                        <h3 class="section-title">System Diagram</h3>
+                        <div class="diagram-box" id="diagram-container">
+                            <p style="color: #9ca3af; padding: 3rem;">Select a system to view diagram</p>
+                        </div>
+                    </div>
+
+                    <!-- System Dimensions - Right Side -->
+                    <div class="dimensions-right">
                         <h3 class="section-title">System Dimensions</h3>
 
                         <div class="dim-group">
@@ -277,14 +295,6 @@
                             <table class="dim-table">
                                 <tbody id="specs-table"></tbody>
                             </table>
-                        </div>
-                    </div>
-
-                    <!-- System Diagram - Much Larger -->
-                    <div>
-                        <h3 class="section-title">System Diagram</h3>
-                        <div class="diagram-box" id="diagram-container">
-                            <p style="color: #9ca3af; padding: 3rem;">Select a system to view diagram</p>
                         </div>
                     </div>
                 </div>
