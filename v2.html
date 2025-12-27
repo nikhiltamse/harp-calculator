@@ -251,27 +251,23 @@
 
             <!-- Right: Results -->
             <div id="results-panel" style="display: none;">
-                <!-- Model Title - Full Width -->
-                <div style="margin-bottom: 2rem;">
-                    <h2 class="model-title" id="system-title">System Specifications</h2>
-                    <p class="model-description" id="system-description"></p>
-                </div>
-
-                <!-- 3-Column Layout: Title | Diagram | Dimensions -->
-                <div style="display: grid; grid-template-columns: auto 1fr 350px; gap: 2rem;">
-                    <!-- Column 1: Section Titles -->
+                <!-- 2-Column Layout: Left (Title + Diagram) | Right (Dimensions) -->
+                <div style="display: grid; grid-template-columns: 1fr 350px; gap: 3rem;">
+                    <!-- Left Column: Title + Diagram -->
                     <div>
-                        <h3 class="section-title" style="margin-bottom: 1.5rem;">System Diagram</h3>
-                    </div>
+                        <!-- System Title -->
+                        <h2 class="model-title" id="system-title" style="margin-bottom: 0.5rem;">System Specifications
+                        </h2>
+                        <p class="model-description" id="system-description" style="margin-bottom: 2rem;"></p>
 
-                    <!-- Column 2: Large Diagram Area -->
-                    <div>
-                        <div class="diagram-box" id="diagram-container" style="min-height: 400px;">
+                        <!-- System Diagram -->
+                        <h3 class="section-title">System Diagram</h3>
+                        <div class="diagram-box" id="diagram-container" style="margin-top: 1rem;">
                             <p style="color: #9ca3af; padding: 3rem;">Select a system to view diagram</p>
                         </div>
                     </div>
 
-                    <!-- Column 3: Dimensions -->
+                    <!-- Right Column: Dimensions -->
                     <div>
                         <h3 class="section-title" style="margin-bottom: 1.5rem;">System Dimensions</h3>
 
