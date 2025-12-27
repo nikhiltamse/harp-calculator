@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HARP Parking System Dimension Calculator - Calculate required building dimensions for various parking system configurations">
+    <meta name="keywords" content="parking system, dimension calculator, HARP, car parking, automated parking">
+    <title>HARP Parking System - Dimension Calculator</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>HARP Parking System Calculator</h1>
+            <p class="subtitle">Calculate required building dimensions for your parking system</p>
+        </header>
+
+        <!-- Main Calculator Card -->
+        <div class="glass-card">
+            <!-- Product Series Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="bolt">Bolt Series</button>
+                <button class="tab-button" data-tab="pitpro111">PitPro-111</button>
+                <button class="tab-button" data-tab="pitpro211">PitPro-211</button>
+                <button class="tab-button" data-tab="elite">Elite Series</button>
+                <button class="tab-button" data-tab="puzzle">Puzzle Parking</button>
+            </div>
+
+            <!-- Bolt Series Tab -->
+            <div class="tab-content active" id="bolt-tab">
+                <div class="info-box">
+                    <strong>Bolt Series</strong> - Double stacker parking system with 2 levels (ground + upper platform). Ideal for residential and commercial applications.
+                </div>
+                
+                <form id="bolt-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="bolt-model">Select Model</label>
+                            <select id="bolt-model" required>
+                                <option value="">Choose a configuration...</option>
+                                <option value="BS-32">BS-32 - Sedan + Sedan</option>
+                                <option value="BS-33">BS-33 - Sedan + Compact SUV</option>
+                                <option value="BS-34">BS-34 - Sedan + SUV</option>
+                                <option value="BS-35">BS-35 - Compact SUV + Sedan</option>
+                                <option value="BS-36">BS-36 - Compact SUV + Compact SUV</option>
+                                <option value="BS-37">BS-37 - SUV + Sedan</option>
+                                <option value="BS-38">BS-38 - SUV + Compact SUV</option>
+                                <option value="BS-39">BS-39 - SUV + SUV</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bolt-car-length">Car Length (mm)</label>
+                            <input type="number" id="bolt-car-length" placeholder="e.g., 4500" min="3000" max="6000" value="5000">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Calculate Dimensions</button>
+                        <button type="button" class="btn-secondary" onclick="resetForm('bolt')">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- PitPro-111 Tab -->
+            <div class="tab-content" id="pitpro111-tab">
+                <div class="info-box">
+                    <strong>PitPro-111 Series</strong> - Three-level parking system (top + ground + pit). Maximizes space utilization with underground parking.
+                </div>
+                
+                <form id="pitpro111-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="pitpro111-model">Select Model</label>
+                            <select id="pitpro111-model" required>
+                                <option value="">Choose a configuration...</option>
+                                <option value="PP111-01">PP111-01 - Sedan + Sedan + Sedan</option>
+                                <option value="PP111-02">PP111-02 - Sedan + Sedan + Compact SUV</option>
+                                <option value="PP111-03">PP111-03 - Sedan + Compact SUV + Sedan</option>
+                                <option value="PP111-04">PP111-04 - Compact SUV + Sedan + Sedan</option>
+                                <option value="PP111-05">PP111-05 - Compact SUV + Compact SUV + Compact SUV</option>
+                                <option value="PP111-06">PP111-06 - SUV + Sedan + Sedan</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pitpro111-car-length">Car Length (mm)</label>
+                            <input type="number" id="pitpro111-car-length" placeholder="e.g., 4500" min="3000" max="6000" value="5000">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Calculate Dimensions</button>
+                        <button type="button" class="btn-secondary" onclick="resetForm('pitpro111')">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- PitPro-211 Tab -->
+            <div class="tab-content" id="pitpro211-tab">
+                <div class="info-box">
+                    <strong>PitPro-211 Series</strong> - Multi-level pit parking system with wider platform configuration.
+                </div>
+                
+                <form id="pitpro211-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="pitpro211-model">Select Model</label>
+                            <select id="pitpro211-model" required>
+                                <option value="">Choose a configuration...</option>
+                                <option value="PP211-01">PP211-01 - Standard Configuration</option>
+                                <option value="PP211-02">PP211-02 - SUV Configuration</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pitpro211-car-length">Car Length (mm)</label>
+                            <input type="number" id="pitpro211-car-length" placeholder="e.g., 4500" min="3000" max="6000" value="5000">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Calculate Dimensions</button>
+                        <button type="button" class="btn-secondary" onclick="resetForm('pitpro211')">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Elite Series Tab -->
+            <div class="tab-content" id="elite-tab">
+                <div class="info-box">
+                    <strong>Elite Series</strong> - Four-post heavy-duty stacker for premium vehicles and higher weight capacity.
+                </div>
+                
+                <form id="elite-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="elite-model">Select Model</label>
+                            <select id="elite-model" required>
+                                <option value="">Choose a configuration...</option>
+                                <option value="EL-01">EL-01 - Sedan + Sedan</option>
+                                <option value="EL-02">EL-02 - SUV + SUV</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="elite-car-length">Car Length (mm)</label>
+                            <input type="number" id="elite-car-length" placeholder="e.g., 4500" min="3000" max="6000" value="5000">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Calculate Dimensions</button>
+                        <button type="button" class="btn-secondary" onclick="resetForm('elite')">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Puzzle Parking Tab -->
+            <div class="tab-content" id="puzzle-tab">
+                <div class="info-box">
+                    <strong>Puzzle Parking</strong> - Independent matrix system where cars move horizontally and vertically for high-density parking.
+                </div>
+                
+                <form id="puzzle-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="puzzle-model">Select Configuration</label>
+                            <select id="puzzle-model" required>
+                                <option value="">Choose a configuration...</option>
+                                <option value="PZ-2x3">2 Rows × 3 Columns (6 cars)</option>
+                                <option value="PZ-2x4">2 Rows × 4 Columns (8 cars)</option>
+                                <option value="PZ-3x3">3 Rows × 3 Columns (9 cars)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="puzzle-car-height">Max Car Height (mm)</label>
+                            <input type="number" id="puzzle-car-height" placeholder="e.g., 1550" min="1400" max="2000" value="1550">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Calculate Dimensions</button>
+                        <button type="button" class="btn-secondary" onclick="resetForm('puzzle')">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="error-message"></div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results" id="results">
+            <h2>Required Building Dimensions</h2>
+            <div class="results-grid" id="results-grid">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/specifications.js"></script>
+    <script src="calculator.js"></script>
+</body>
+</html>
