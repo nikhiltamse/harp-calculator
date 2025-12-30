@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HARP V3 Calculator - Find compatible parking systems with pricing">
+    <title>HARP Calculator V3 - Find Your System</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .parking-type-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .radio-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 1.5rem;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            border-color: #1e40af;
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        .radio-option label:hover {
+            border-color: #3b82f6;
+        }
+
+        .model-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .model-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .model-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+
+        .model-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #059669;
+        }
+
+        .model-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        .diagram-section img {
+            max-width: 100%;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+        }
+
+        .specs-section table {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .specs-section td {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .specs-section td:first-child {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .specs-section td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        @media (max-width: 768px) {
+            .model-content {
+                grid-template-columns: 1fr;
+            }
+
+            .parking-type-selector {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div style="flex: 1;">
+                    <h1 style="margin: 0; font-size: 28px; color: #1e40af;">Find Your Parking System</h1>
+                    <p style="color: #6b7280; margin: 0.5rem 0 0 0;">Select parking type and enter dimensions to see compatible models with pricing</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="index.html" style="background: white; border: 2px solid #d1d5db; color: #374151; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap;">
+                        V1
+                    </a>
+                    <a href="v2.html" style="background: white; border: 2px solid #d1d5db; color: #374151; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap;">
+                        V2
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <div class="glass-card">
+            <h2 style="margin-top: 0; font-size: 20px;">System Requirements</h2>
+
+            <!-- Parking Type Selection -->
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 1rem;">
+                    Parking Type
+                </label>
+                <div class="parking-type-selector">
+                    <div class="radio-option">
+                        <input type="radio" name="parking-type" id="above-ground" value="above" checked>
+                        <label for="above-ground">
+                            🏢 Above Ground Parking
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="parking-type" id="pit-parking" value="pit">
+                        <label for="pit-parking">
+                            🕳️ Pit Parking
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dimension Inputs -->
+            <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="form-group">
+                    <label for="height">Height (H) - mm</label>
+                    <input type="number" id="height" placeholder="e.g., 3500" min="2000" max="6000" required>
+                    <span class="input-hint">Ceiling height available</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="width">Width (Q) - mm</label>
+                    <input type="number" id="width" placeholder="e.g., 2400" min="2000" max="10000" required>
+                    <span class="input-hint">Space width available</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="length">Length (L) - mm</label>
+                    <input type="number" id="length" placeholder="e.g., 5500" min="4000" max="16000" required>
+                    <span class="input-hint">Space length available</span>
+                </div>
+
+                <div class="form-group" id="pit-depth-group" style="display: none;">
+                    <label for="pit-depth">Pit Depth (P) - mm</label>
+                    <input type="number" id="pit-depth" placeholder="e.g., 1800" min="1000" max="3000">
+                    <span class="input-hint">Underground depth available</span>
+                </div>
+            </div>
+
+            <div class="button-group" style="margin-top: 2rem;">
+                <button type="button" class="btn-primary" id="calculate-btn">Find Compatible Systems</button>
+                <button type="button" class="btn-secondary" id="reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-container" style="display: none; margin-top: 2rem;">
+            <h2 style="color: #1e40af; margin-bottom: 1.5rem;">
+                <span id="results-count"></span>
+            </h2>
+            <div id="results-list"></div>
+        </div>
+
+        <!-- No Results -->
+        <div id="no-results" style="display: none; margin-top: 2rem;">
+            <div class="glass-card" style="text-align: center; padding: 3rem;">
+                <p style="font-size: 18px; color: #6b7280; margin: 0;">
+                    ❌ No compatible systems found for the given dimensions.
+                </p>
+                <p style="font-size: 14px; color: #9ca3af; margin: 1rem 0 0 0;">
+                    Please try adjusting your measurements.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/specifications.js"></script>
+    <script src="v2-diagrams.js"></script>
+    <script src="v3-calculator.js"></script>
+</body>
+
+</html>
