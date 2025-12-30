@@ -197,15 +197,30 @@ function createSystemRow(item) {
     const dimensions = spec.dimensions;
     const price = getPlaceholderPrice(modelId);
 
+    // Get user input length
+    const userInputLength = parseInt(document.getElementById('length').value);
+
     const row = document.createElement('div');
     row.style.cssText = 'padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 1rem; background: white;';
+
+    const rowId = 'system-' + modelId.replace(/[^a-zA-Z0-9]/g, '-');
 
     row.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <div>
                 <div style="font-size: 18px; font-weight: 700; color: #1e40af;">${modelId} - ${spec.name}</div>
             </div>
-            <div style="font-size: 22px; font-weight: 700; color: #059669;">₹${price.toLocaleString('en-IN')}</div>
+            <div>
+                <button 
+                    class="price-toggle-btn" 
+                    data-row-id="${rowId}"
+                    style="background: #1e40af; color: white; padding: 8px 16px; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.2s ease;">
+                    Show Price
+                </button>
+                <div id="${rowId}-price" style="display: none; font-size: 22px; font-weight: 700; color: #059669; margin-top: 0.5rem;">
+                    ₹${price.toLocaleString('en-IN')}
+                </div>
+            </div>
         </div>
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 14px;">
@@ -219,7 +234,7 @@ function createSystemRow(item) {
             </div>
             <div>
                 <span style="color: #6b7280;">Length (L):</span>
-                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.totalLength || dimensions.platformLength || 'N/A'}mm</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${userInputLength}mm</span>
             </div>
             ${dimensions.pitDepth ? `
             <div>
@@ -235,6 +250,26 @@ function createSystemRow(item) {
             ` : ''}
         </div>
     `;
+
+    // Add event listener for price toggle
+    setTimeout(() => {
+        const toggleBtn = document.querySelector(`[data-row-id="${rowId}"]`);
+        const priceDiv = document.getElementById(`${rowId}-price`);
+
+        if (toggleBtn && priceDiv) {
+            toggleBtn.addEventListener('click', function () {
+                if (priceDiv.style.display === 'none') {
+                    priceDiv.style.display = 'block';
+                    toggleBtn.textContent = 'Hide Price';
+                    toggleBtn.style.background = '#6b7280';
+                } else {
+                    priceDiv.style.display = 'none';
+                    toggleBtn.textContent = 'Show Price';
+                    toggleBtn.style.background = '#1e40af';
+                }
+            });
+        }
+    }, 100);
 
     return row;
 }
