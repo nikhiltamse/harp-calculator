@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HARP Admin Portal - View manufacturing costs and quoted prices">
+    <title>HARP Admin Portal - Price Analysis</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-badge {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .parking-type-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .radio-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-option label {
+            display: block;
+            padding: 1.5rem;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .radio-option input[type="radio"]:checked+label {
+            border-color: #dc2626;
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .radio-option label:hover {
+            border-color: #ef4444;
+        }
+
+        .price-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .price-item {
+            text-align: center;
+            padding: 0.75rem;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .price-value.cost {
+            color: #dc2626;
+        }
+
+        .price-value.quoted {
+            color: #059669;
+        }
+
+        .price-value.profit {
+            color: #1e40af;
+        }
+
+        @media (max-width: 768px) {
+            .parking-type-selector {
+                flex-direction: column;
+            }
+
+            .price-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 22px !important;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            header>div {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div style="flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                        <h1 style="margin: 0; font-size: 28px; color: #dc2626;">Admin Portal</h1>
+                        <span class="admin-badge">🔒 Owner Access</span>
+                    </div>
+                    <p style="color: #6b7280; margin: 0.5rem 0 0 0;">View manufacturing costs vs quoted prices with
+                        profit margins</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="v3.html"
+                        style="background: white; border: 2px solid #d1d5db; color: #374151; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap;">
+                        👥 Sales View
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <div class="glass-card">
+            <h2 style="margin-top: 0; font-size: 20px;">System Requirements</h2>
+
+            <!-- Parking Type Selection -->
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 1rem;">
+                    Parking Type
+                </label>
+                <div class="parking-type-selector">
+                    <div class="radio-option">
+                        <input type="radio" name="parking-type" id="above-ground" value="above" checked>
+                        <label for="above-ground">
+                            🏢 Above Ground Parking
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="parking-type" id="pit-parking" value="pit">
+                        <label for="pit-parking">
+                            🕳️ Pit Parking
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dimension Inputs -->
+            <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="form-group">
+                    <label for="height">Height (H) - mm</label>
+                    <input type="number" id="height" placeholder="e.g., 3500" min="2000" max="6000" required>
+                    <span class="input-hint">Ceiling height available</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="width">Width (Q) - mm</label>
+                    <input type="number" id="width" placeholder="e.g., 2400" min="2000" max="10000" required>
+                    <span class="input-hint">Space width available</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="length">Length (L) - mm</label>
+                    <input type="number" id="length" placeholder="e.g., 5500" min="4000" max="16000" required>
+                    <span class="input-hint">Space length available</span>
+                </div>
+
+                <div class="form-group" id="pit-depth-group" style="display: none;">
+                    <label for="pit-depth">Pit Depth (P) - mm</label>
+                    <input type="number" id="pit-depth" placeholder="e.g., 1800" min="1000" max="3000">
+                    <span class="input-hint">Underground depth available</span>
+                </div>
+            </div>
+
+            <div class="button-group" style="margin-top: 2rem;">
+                <button type="button" class="btn-primary" id="calculate-btn" style="background: #dc2626;">Analyze
+                    Systems</button>
+                <button type="button" class="btn-secondary" id="reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-container" style="display: none; margin-top: 2rem;">
+            <h2 style="color: #dc2626; margin-bottom: 1.5rem;">
+                <span id="results-count"></span>
+            </h2>
+            <div id="results-list"></div>
+        </div>
+
+        <!-- No Results -->
+        <div id="no-results" style="display: none; margin-top: 2rem;">
+            <div class="glass-card" style="text-align: center; padding: 3rem;">
+                <p style="font-size: 18px; color: #6b7280; margin: 0;">
+                    ❌ No compatible systems found for the given dimensions.
+                </p>
+                <p style="font-size: 14px; color: #9ca3af; margin: 1rem 0 0 0;">
+                    Please try adjusting your measurements.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/specifications.js"></script>
+    <script src="admin-calculator.js"></script>
+</body>
+
+</html>
