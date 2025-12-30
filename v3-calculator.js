@@ -144,9 +144,24 @@ function displayResults(compatible) {
     const parkingType = document.querySelector('input[name="parking-type"]:checked').value;
     const diagramPath = parkingType === 'pit' ? 'assets/diagrams/pitpro-series.jpg' : 'assets/diagrams/bolt-series.jpg';
 
-    // Create results layout: diagram on left, systems list on right
+    // Create results layout: diagram on left, systems list on right (responsive)
     const resultsLayout = document.createElement('div');
-    resultsLayout.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;';
+    resultsLayout.style.cssText = 'display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 1rem;';
+    resultsLayout.className = 'results-layout-responsive';
+
+    // Add responsive style
+    if (!document.getElementById('responsive-styles')) {
+        const style = document.createElement('style');
+        style.id = 'responsive-styles';
+        style.textContent = `
+            @media (min-width: 768px) {
+                .results-layout-responsive {
+                    grid-template-columns: 1fr 1fr !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 
     // Left: Single diagram
     const diagramSection = document.createElement('div');

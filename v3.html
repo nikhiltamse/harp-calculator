@@ -44,7 +44,7 @@
             color: #374151;
         }
 
-        .radio-option input[type="radio"]:checked + label {
+        .radio-option input[type="radio"]:checked+label {
             border-color: #1e40af;
             background: #eff6ff;
             color: #1e40af;
@@ -60,7 +60,7 @@
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .model-header {
@@ -125,6 +125,33 @@
             .parking-type-selector {
                 flex-direction: column;
             }
+
+            .container {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 22px !important;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            header>div {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+
+            header>div>div:last-child {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            header>div>div:last-child a {
+                flex: 1;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -136,13 +163,16 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <div style="flex: 1;">
                     <h1 style="margin: 0; font-size: 28px; color: #1e40af;">Find Your Parking System</h1>
-                    <p style="color: #6b7280; margin: 0.5rem 0 0 0;">Select parking type and enter dimensions to see compatible models with pricing</p>
+                    <p style="color: #6b7280; margin: 0.5rem 0 0 0;">Select parking type and enter dimensions to see
+                        compatible models with pricing</p>
                 </div>
                 <div style="display: flex; gap: 0.5rem;">
-                    <a href="index.html" style="background: white; border: 2px solid #d1d5db; color: #374151; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap;">
+                    <a href="index.html"
+                        style="background: white; border: 2px solid #d1d5db; color: #374151; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap;">
                         V1
                     </a>
-                    <a href="v2.html" style="background: white; border: 2px solid #d1d5db; color: #374151; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap;">
+                    <a href="v2.html"
+                        style="background: white; border: 2px solid #d1d5db; color: #374151; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap;">
                         V2
                     </a>
                 </div>
