@@ -1,6 +1,6 @@
 // HARP V3 Calculator - Enhanced with Parking Type Selection and Pricing
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeV3Calculator();
 });
 
@@ -12,7 +12,7 @@ function initializeV3Calculator() {
 
     // Handle parking type change
     parkingTypeRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
+        radio.addEventListener('change', function () {
             if (this.value === 'pit') {
                 pitDepthGroup.style.display = 'block';
             } else {
@@ -23,12 +23,12 @@ function initializeV3Calculator() {
     });
 
     // Calculate button
-    calculateBtn.addEventListener('click', function() {
+    calculateBtn.addEventListener('click', function () {
         calculateCompatibleSystems();
     });
 
     // Reset button
-    resetBtn.addEventListener('click', function() {
+    resetBtn.addEventListener('click', function () {
         resetCalculator();
     });
 }
@@ -36,7 +36,7 @@ function initializeV3Calculator() {
 function calculateCompatibleSystems() {
     // Get parking type
     const parkingType = document.querySelector('input[name="parking-type"]:checked').value;
-    
+
     // Get dimensions
     const height = parseInt(document.getElementById('height').value);
     const width = parseInt(document.getElementById('width').value);
@@ -68,12 +68,12 @@ function calculateCompatibleSystems() {
     for (const [seriesKey, seriesData] of Object.entries(HARP_SPECIFICATIONS)) {
         for (const [modelId, spec] of Object.entries(seriesData)) {
             const compatibility = checkCompatibility(spec, availableSpace, modelId);
-            
+
             if (compatibility.isCompatible) {
                 // Filter by parking type
                 const isPitSystem = modelId.startsWith('PP') || modelId.startsWith('PZ');
-                
-                if ((parkingType === 'pit' && isPitSystem) || 
+
+                if ((parkingType === 'pit' && isPitSystem) ||
                     (parkingType === 'above' && !isPitSystem)) {
                     compatible.push({
                         modelId: modelId,
@@ -93,28 +93,28 @@ function calculateCompatibleSystems() {
 function checkCompatibility(spec, availableSpace, modelId) {
     const dimensions = spec.dimensions;
     const incompatibilityReasons = [];
-    
+
     // Check height
     if (dimensions.requiredHeight > availableSpace.height) {
         incompatibilityReasons.push(`Height: Need ${dimensions.requiredHeight}mm, have ${availableSpace.height}mm`);
     }
-    
+
     // Check width
     if (dimensions.requiredWidth > availableSpace.width) {
         incompatibilityReasons.push(`Width: Need ${dimensions.requiredWidth}mm, have ${availableSpace.width}mm`);
     }
-    
+
     // Check length
     const requiredLength = dimensions.totalLength || dimensions.platformLength || 5000;
     if (requiredLength > availableSpace.length) {
         incompatibilityReasons.push(`Length: Need ${requiredLength}mm, have ${availableSpace.length}mm`);
     }
-    
+
     // Check pit depth for pit systems
     if (dimensions.pitDepth && dimensions.pitDepth > availableSpace.pitDepth) {
         incompatibilityReasons.push(`Pit Depth: Need ${dimensions.pitDepth}mm, have ${availableSpace.pitDepth}mm`);
     }
-    
+
     return {
         isCompatible: incompatibilityReasons.length === 0,
         reasons: incompatibilityReasons
@@ -140,86 +140,88 @@ function displayResults(compatible) {
     // Clear previous results
     resultsList.innerHTML = '';
 
-    // Display each compatible system
+    // Get parking type to determine which diagram to show
+    const parkingType = document.querySelector('input[name="parking-type"]:checked').value;
+    const diagramPath = parkingType === 'pit' ? 'assets/diagrams/pitpro-series.jpg' : 'assets/diagrams/bolt-series.jpg';
+
+    // Create results layout: diagram on left, systems list on right
+    const resultsLayout = document.createElement('div');
+    resultsLayout.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;';
+
+    // Left: Single diagram
+    const diagramSection = document.createElement('div');
+    diagramSection.innerHTML = `
+        <h3 style="color: #374151; margin: 0 0 1rem 0; font-size: 16px; font-weight: 600;">System Diagram</h3>
+        <img src="${diagramPath}" alt="System Diagram" style="width: 100%; border: 1px solid #e5e7eb; border-radius: 4px;">
+    `;
+
+    // Right: Systems list
+    const systemsList = document.createElement('div');
+    systemsList.innerHTML = `
+        <h3 style="color: #374151; margin: 0 0 1rem 0; font-size: 16px; font-weight: 600;">Compatible Systems</h3>
+        <div id="systems-table"></div>
+    `;
+
+    resultsLayout.appendChild(diagramSection);
+    resultsLayout.appendChild(systemsList);
+    resultsList.appendChild(resultsLayout);
+
+    // Add each system as a row
+    const systemsTable = document.getElementById('systems-table');
     compatible.forEach(item => {
-        const card = createModelCard(item);
-        resultsList.appendChild(card);
+        const row = createSystemRow(item);
+        systemsTable.appendChild(row);
     });
 
     // Scroll to results
     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function createModelCard(item) {
-    const { modelId, spec, seriesKey } = item;
+function createSystemRow(item) {
+    const { modelId, spec } = item;
     const dimensions = spec.dimensions;
-    
-    // Get placeholder price
     const price = getPlaceholderPrice(modelId);
-    
-    // Determine system type for diagram
-    const systemType = getSystemType(modelId);
-    const diagramMap = {
-        'BOLT': 'assets/diagrams/bolt-series.jpg',
-        'PITPRO': 'assets/diagrams/pitpro-series.jpg',
-        'ELITE': 'assets/diagrams/bolt-series.jpg',
-        'PUZZLE': 'assets/diagrams/pitpro-series.jpg'
-    };
-    const diagramPath = diagramMap[systemType];
 
-    const card = document.createElement('div');
-    card.className = 'model-card';
-    
-    card.innerHTML = `
-        <div class="model-header">
+    const row = document.createElement('div');
+    row.style.cssText = 'padding: 1.25rem; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 1rem; background: white;';
+
+    row.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <div>
-                <div class="model-name">${modelId} - ${spec.name}</div>
-                <p style="color: #6b7280; margin: 0.5rem 0 0 0; font-size: 14px;">${spec.description || getSeriesDescription(seriesKey)}</p>
+                <div style="font-size: 18px; font-weight: 700; color: #1e40af;">${modelId} - ${spec.name}</div>
             </div>
-            <div class="model-price">₹${price.toLocaleString('en-IN')}</div>
+            <div style="font-size: 22px; font-weight: 700; color: #059669;">₹${price.toLocaleString('en-IN')}</div>
         </div>
         
-        <div class="model-content">
-            <div class="diagram-section">
-                <h4 style="color: #374151; margin: 0 0 1rem 0; font-size: 14px; font-weight: 600;">System Diagram</h4>
-                ${diagramPath ? `<img src="${diagramPath}" alt="${modelId} Diagram">` : '<p style="color: #9ca3af;">Diagram not available</p>'}
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 14px;">
+            <div>
+                <span style="color: #6b7280;">Height (H):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.requiredHeight}mm</span>
             </div>
-            
-            <div class="specs-section">
-                <h4 style="color: #374151; margin: 0 0 1rem 0; font-size: 14px; font-weight: 600;">System Specifications</h4>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Required Height (H)</td>
-                            <td>${dimensions.requiredHeight}mm</td>
-                        </tr>
-                        <tr>
-                            <td>Required Width (Q)</td>
-                            <td>${dimensions.requiredWidth}mm</td>
-                        </tr>
-                        <tr>
-                            <td>Total Length (L)</td>
-                            <td>${dimensions.totalLength || dimensions.platformLength || 'N/A'}mm</td>
-                        </tr>
-                        ${dimensions.pitDepth ? `
-                        <tr>
-                            <td>Pit Depth (P)</td>
-                            <td>${dimensions.pitDepth}mm</td>
-                        </tr>
-                        ` : ''}
-                        ${spec.capacity ? `
-                        <tr>
-                            <td>Capacity</td>
-                            <td>${spec.capacity} cars</td>
-                        </tr>
-                        ` : ''}
-                    </tbody>
-                </table>
+            <div>
+                <span style="color: #6b7280;">Width (Q):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.requiredWidth}mm</span>
             </div>
+            <div>
+                <span style="color: #6b7280;">Length (L):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.totalLength || dimensions.platformLength || 'N/A'}mm</span>
+            </div>
+            ${dimensions.pitDepth ? `
+            <div>
+                <span style="color: #6b7280;">Pit (P):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.pitDepth}mm</span>
+            </div>
+            ` : ''}
+            ${spec.capacity ? `
+            <div>
+                <span style="color: #6b7280;">Capacity:</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.capacity} cars</span>
+            </div>
+            ` : ''}
         </div>
     `;
-    
-    return card;
+
+    return row;
 }
 
 function getSystemType(modelId) {
@@ -252,30 +254,30 @@ function getPlaceholderPrice(modelId) {
         'BS-36': 550000,
         'BS-37': 575000,
         'BS-38': 600000,
-        
+
         // PitPro 111
         'PP111-01': 750000,
         'PP111-02': 775000,
         'PP111-03': 800000,
         'PP111-04': 825000,
-        
+
         // PitPro 211
         'PP211-01': 850000,
         'PP211-02': 875000,
         'PP211-03': 900000,
         'PP211-04': 925000,
-        
+
         // Elite Series
         'EL-32': 650000,
         'EL-33': 675000,
-        
+
         // Puzzle Parking
         'PZ-24': 1200000,
         'PZ-26': 1250000,
         'PZ-28': 1300000,
         'PZ-210': 1400000
     };
-    
+
     return prices[modelId] || 500000;
 }
 
