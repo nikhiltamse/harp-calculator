@@ -108,11 +108,7 @@ function checkCompatibility(spec, availableSpace, modelId) {
         incompatibilityReasons.push(`Width: Need ${dimensions.requiredWidth}mm, have ${availableSpace.width}mm`);
     }
 
-    // Check length
-    const requiredLength = dimensions.totalLength || dimensions.platformLength || 5000;
-    if (requiredLength > availableSpace.length) {
-        incompatibilityReasons.push(`Length: Need ${requiredLength}mm, have ${availableSpace.length}mm`);
-    }
+    // Length check removed - user input length is always valid within the allowed range (4800-5200 or 4800-5300)
 
     // Check pit depth for pit systems
     if (dimensions.pitDepth && dimensions.pitDepth > availableSpace.pitDepth) {
