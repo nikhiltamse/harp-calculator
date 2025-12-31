@@ -13,11 +13,15 @@ function initializeV3Calculator() {
     // Handle parking type change
     parkingTypeRadios.forEach(radio => {
         radio.addEventListener('change', function () {
+            const lengthInput = document.getElementById('length');
+
             if (this.value === 'pit') {
                 pitDepthGroup.style.display = 'block';
+                lengthInput.max = 5300; // Pit parking max
             } else {
                 pitDepthGroup.style.display = 'none';
                 document.getElementById('pit-depth').value = '';
+                lengthInput.max = 5200; // Above ground max
             }
         });
     });
