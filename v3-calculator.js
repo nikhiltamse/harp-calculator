@@ -229,8 +229,8 @@ function createSystemRow(item) {
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.requiredHeight}mm</span>
             </div>
             <div>
-                <span style="color: #6b7280;">Width (Q):</span>
-                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.requiredWidth}mm</span>
+                <span style="color: #6b7280;">Width Range (Q):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">2250-2750mm</span>
             </div>
             <div>
                 <span style="color: #6b7280;">Length (L):</span>
