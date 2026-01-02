@@ -6,43 +6,58 @@ const HARP_SPECIFICATIONS = {
   boltSeries: {
     'BS-32': {
       name: 'Sedan + Sedan',
-      carHeights: { entry: 1550, upper: 1550 },
-      dimensions: { requiredHeight: 3600, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+      carHeights: { entry: 1500, upper: 1500 },
+      dimensions: { requiredHeight: 3200, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     },
     'BS-33': {
-      name: 'Sedan + Compact SUV',
-      carHeights: { entry: 1550, upper: 1650 },
-      dimensions: { requiredHeight: 3700, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+      name: 'HB + Sedan',
+      carHeights: { entry: 1600, upper: 1500 },
+      dimensions: { requiredHeight: 3300, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     },
     'BS-34': {
-      name: 'Sedan + SUV',
-      carHeights: { entry: 1550, upper: 1800 },
-      dimensions: { requiredHeight: 3850, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+      name: 'TB + Sedan',
+      carHeights: { entry: 1700, upper: 1500 },
+      dimensions: { requiredHeight: 3400, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     },
     'BS-35': {
-      name: 'Compact SUV + Sedan',
-      carHeights: { entry: 1650, upper: 1550 },
-      dimensions: { requiredHeight: 3700, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+      name: 'TB + Sedan',
+      carHeights: { entry: 1800, upper: 1500 },
+      dimensions: { requiredHeight: 3500, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     },
     'BS-36': {
-      name: 'Compact SUV + Compact SUV',
-      carHeights: { entry: 1650, upper: 1650 },
-      dimensions: { requiredHeight: 3800, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+      name: 'TB + Sedan',
+      carHeights: { entry: 1900, upper: 1500 },
+      dimensions: { requiredHeight: 3600, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     },
     'BS-37': {
       name: 'SUV + Sedan',
-      carHeights: { entry: 1800, upper: 1550 },
-      dimensions: { requiredHeight: 3850, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+      carHeights: { entry: 2000, upper: 1500 },
+      dimensions: { requiredHeight: 3700, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     },
     'BS-38': {
-      name: 'SUV + Compact SUV',
-      carHeights: { entry: 1800, upper: 1650 },
-      dimensions: { requiredHeight: 3950, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+      name: 'SUV + HB',
+      carHeights: { entry: 2000, upper: 1600 },
+      dimensions: { requiredHeight: 3800, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     },
     'BS-39': {
-      name: 'SUV + SUV',
-      carHeights: { entry: 1800, upper: 1800 },
+      name: 'SUV + TB',
+      carHeights: { entry: 2000, upper: 1700 },
+      dimensions: { requiredHeight: 3900, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+    },
+    'BS-40': {
+      name: 'SUV + TB',
+      carHeights: { entry: 2000, upper: 1800 },
+      dimensions: { requiredHeight: 4000, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+    },
+    'BS-41': {
+      name: 'SUV + TB',
+      carHeights: { entry: 2000, upper: 1900 },
       dimensions: { requiredHeight: 4100, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
+    },
+    'BS-42': {
+      name: 'SUV + SUV',
+      carHeights: { entry: 2000, upper: 2000 },
+      dimensions: { requiredHeight: 4200, requiredWidth: 2400, platformLength: 5000, totalLength: 5300 }
     }
   },
 
