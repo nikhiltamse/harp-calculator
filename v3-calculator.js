@@ -242,6 +242,18 @@ function createSystemRow(item) {
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.pitDepth}mm</span>
             </div>
             ` : ''}
+            ${spec.carHeights && spec.carHeights.entry ? `
+            <div>
+                <span style="color: #6b7280;">Lower Car Height (X):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.carHeights.entry}mm</span>
+            </div>
+            ` : ''}
+            ${spec.carHeights && spec.carHeights.upper ? `
+            <div>
+                <span style="color: #6b7280;">Upper Car Height (Y):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.carHeights.upper}mm</span>
+            </div>
+            ` : ''}
             ${spec.capacity ? `
             <div>
                 <span style="color: #6b7280;">Capacity:</span>
