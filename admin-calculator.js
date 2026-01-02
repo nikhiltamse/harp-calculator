@@ -94,21 +94,21 @@ function checkCompatibility(spec, availableSpace, modelId) {
     const dimensions = spec.dimensions;
     const incompatibilityReasons = [];
 
-    // Check height - EXACT MATCH REQUIRED
-    if (dimensions.requiredHeight !== availableSpace.height) {
-        incompatibilityReasons.push(`Height mismatch: System needs ${dimensions.requiredHeight}mm, you entered ${availableSpace.height}mm`);
+    // Check height - system must fit within available height
+    if (dimensions.requiredHeight > availableSpace.height) {
+        incompatibilityReasons.push(`Height: Need ${dimensions.requiredHeight}mm, have ${availableSpace.height}mm`);
     }
 
-    // Check width - EXACT MATCH REQUIRED
-    if (dimensions.requiredWidth !== availableSpace.width) {
-        incompatibilityReasons.push(`Width mismatch: System needs ${dimensions.requiredWidth}mm, you entered ${availableSpace.width}mm`);
+    // Check width - system must fit within available width
+    if (dimensions.requiredWidth > availableSpace.width) {
+        incompatibilityReasons.push(`Width: Need ${dimensions.requiredWidth}mm, have ${availableSpace.width}mm`);
     }
 
     // Length check removed - user input length is always valid
 
-    // Check pit depth for pit systems - EXACT MATCH REQUIRED
-    if (dimensions.pitDepth && dimensions.pitDepth !== availableSpace.pitDepth) {
-        incompatibilityReasons.push(`Pit Depth mismatch: System needs ${dimensions.pitDepth}mm, you entered ${availableSpace.pitDepth}mm`);
+    // Check pit depth for pit systems
+    if (dimensions.pitDepth && dimensions.pitDepth > availableSpace.pitDepth) {
+        incompatibilityReasons.push(`Pit Depth: Need ${dimensions.pitDepth}mm, have ${availableSpace.pitDepth}mm`);
     }
 
     return {
