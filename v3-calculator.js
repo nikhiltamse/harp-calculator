@@ -232,26 +232,26 @@ function createSystemRow(item) {
                 <span style="color: #6b7280;">Width Range (Q):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">2250-2750mm</span>
             </div>
+            ${spec.carHeights && spec.carHeights.upper ? `
+            <div>
+                <span style="color: #6b7280;">Upper Car Height (Y):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.carHeights.upper}mm</span>
+            </div>
+            ` : ''}
             <div>
                 <span style="color: #6b7280;">Length (L):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${userInputLength}mm</span>
             </div>
-            ${dimensions.pitDepth ? `
-            <div>
-                <span style="color: #6b7280;">Pit (P):</span>
-                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.pitDepth}mm</span>
-            </div>
-            ` : ''}
             ${spec.carHeights && spec.carHeights.entry ? `
             <div>
                 <span style="color: #6b7280;">Lower Car Height (X):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.carHeights.entry}mm</span>
             </div>
             ` : ''}
-            ${spec.carHeights && spec.carHeights.upper ? `
+            ${dimensions.pitDepth ? `
             <div>
-                <span style="color: #6b7280;">Upper Car Height (Y):</span>
-                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.carHeights.upper}mm</span>
+                <span style="color: #6b7280;">Pit (P):</span>
+                <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.pitDepth}mm</span>
             </div>
             ` : ''}
             ${spec.capacity ? `
