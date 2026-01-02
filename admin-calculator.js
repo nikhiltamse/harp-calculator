@@ -224,7 +224,7 @@ function createSystemRow(item) {
         </div>
         
         <!-- Specifications -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 14px; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 14px; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
             <div>
                 <span style="color: #6b7280;">Height (H):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.requiredHeight}mm</span>
@@ -238,7 +238,7 @@ function createSystemRow(item) {
                 <span style="color: #6b7280;">Upper Car Height (Y):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.carHeights.upper}mm</span>
             </div>
-            ` : ''}
+            ` : '<div></div>'}
             <div>
                 <span style="color: #6b7280;">Length (L):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.totalLength || dimensions.platformLength || 'N/A'}mm</span>
@@ -248,15 +248,15 @@ function createSystemRow(item) {
                 <span style="color: #6b7280;">Lower Car Height (X):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.carHeights.entry}mm</span>
             </div>
-            ` : ''}
+            ` : '<div></div>'}
             ${dimensions.pitDepth ? `
             <div>
                 <span style="color: #6b7280;">Pit (P):</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${dimensions.pitDepth}mm</span>
             </div>
-            ` : ''}
+            ` : '<div></div>'}
             ${spec.capacity ? `
-            <div>
+            <div style="grid-column: 1 / -1;">
                 <span style="color: #6b7280;">Capacity:</span>
                 <span style="font-weight: 600; color: #111827; margin-left: 0.5rem;">${spec.capacity} cars</span>
             </div>
